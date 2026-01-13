@@ -12,10 +12,13 @@ interface NewsRow {
   picture: string
   date_of_release: string
 }
+interface HomePageProps {
+  news: NewsRow
+}
 
 
-const Template = (news: NewsRow) => {
-  const { news: newsItem } = news;
+const Template = ({news: newsItem}: HomePageProps) => {
+  // const { news } = news;
   const slug = newsItem.news_title
   .toLowerCase()
   .replace(/\s+/g, "-");
