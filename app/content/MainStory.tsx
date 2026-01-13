@@ -12,10 +12,14 @@ interface NewsRow {
   date_of_release: string
 }
 
+interface MainStoryProps {
+  mainstory: NewsRow;
+}
 
-const MainStory = (mainstory: NewsRow) => {
+
+const MainStory = ({mainstory: newsItem}: MainStoryProps) => {
   
-  const { mainstory: newsItem } = mainstory;
+  // const { mainstory } = mainstory;
   const slug = newsItem.news_title
   .toLowerCase()
   .replace(/\s+/g, "-");
