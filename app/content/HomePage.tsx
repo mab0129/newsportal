@@ -40,3 +40,4 @@ const HomePage = ({newsstories}: HomePageProps) => {
 }
 
 export default HomePage
+
