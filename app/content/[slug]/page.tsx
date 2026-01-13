@@ -5,20 +5,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons';
 import Header from "@/app/Header";
 
+interface NewsRow {
+  news_title: string;
+  news_details: string;
+  writer_name: string;
+  picture: string;
+  date_of_release: string;
+}
 
-export default async function NewsDetails({ params }) {
-  const host = headers().get("host");
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default async function NewsDetails({ params }: PageProps) {
+  const headersList = await headers();
+  const host = headersList.get("host");
+  // const host = headers().get("host");
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
   const res = await fetch(`${protocol}://${host}/news_data.csv`);
   const csvText = await res.text();
 
-  const { data } = Papa.parse(csvText, {
+  const { data } = Papa.parse<NewsRow>(csvText, {
     header: true,
     skipEmptyLines: true,
   });
 
-  const newsItem = data.find((item: any) => {
+  const newsItem = data.find((item) => {
     const itemSlug = item.news_title
       .toLowerCase()
       .replace(/\s+/g, "-");
